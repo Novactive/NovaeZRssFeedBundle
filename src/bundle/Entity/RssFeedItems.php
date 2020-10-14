@@ -89,6 +89,13 @@ class RssFeedItems
     private $category;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="only_visible", type="boolean")
+     */
+    private $onlyVisible;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="media", type="string", nullable=true)
@@ -168,6 +175,7 @@ class RssFeedItems
             'locationId' => $this->getSubtreePath(),
             'includeSubtreePath' => $this->getIncludeSubtree(),
             'contentTypeId' => $this->getContentTypeId(),
+            'onlyVisible' => $this->getOnlyVisible(),
             'fieldTypesIdentifier' => [
                 'title' => $this->getTitle(),
                 'description' => $this->getDescription(),
@@ -343,5 +351,21 @@ class RssFeedItems
         $this->media = $media;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getOnlyVisible(): bool
+    {
+        return $this->onlyVisible;
+    }
+
+    /**
+     * @param bool $onlyVisible
+     */
+    public function setOnlyVisible(bool $onlyVisible): void
+    {
+        $this->onlyVisible = $onlyVisible;
     }
 }

@@ -71,6 +71,10 @@ class RssFeedsService
 
             $criterion[] = new Query\Criterion\ContentTypeId($filter['contentTypeId']);
 
+            if ($filter['onlyVisible']) {
+                $criterion[] = new Query\Criterion\Visibility(Query\Criterion\Visibility::VISIBLE);
+            }
+
             $queryFilter[] = new Query\Criterion\LogicalAnd($criterion);
         }
 
