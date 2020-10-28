@@ -4,10 +4,11 @@
     {% spaceless %}
         {% if not ez_is_field_empty( content, field ) %}
             {% set imageAlias = ez_image_alias( field, versionInfo, parameters.alias|default( 'reference' ) ) %}
-            {% set src = imageAlias ? asset( imageAlias.uri ) : "//:0" %}
+            {% set src = imageAlias ? asset( imageAlias.dirPath ~ (imageAlias.fileName)|url_encode ) : "//:0" %}
             <enclosure
                     url="{{ src }}"
                     length="{{ field.value.filesize }}"
+                    type="{{ imageAlias.mimeType }}"
             />
         {% endif %}
     {% endspaceless %}
@@ -27,4 +28,17 @@
             }))}}
         {% endif %}
     {% endspaceless %}
+{% endblock %}
+
+{% block ezbinaryfile_field %}
+    {% apply spaceless %}
+        {% if not ez_is_field_empty( content, field ) %}
+            {% set route_reference = ez_route( 'ez_content_download', { 'content': content, 'fieldIdentifier': field.fieldDefIdentifier } ) %}
+            <enclosure
+                    url = "{{ absolute_url(path( route_reference )) }}"
+                    length="{{ field.value.fileSize }}"
+                    type="{{ field.value.mimeType }}"
+            />
+        {% endif %}
+    {% endapply %}
 {% endblock %}
