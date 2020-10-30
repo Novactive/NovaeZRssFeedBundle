@@ -70,7 +70,7 @@ class SiteAccessAwareEntityManagerFactory
             return $this->registry->getManager();
         }
 
-        if (in_array($connectionName, $this->registry->getManagerNames())) {
+        if (isset($this->registry->getManagerNames()[$connectionName])) {
             return $this->registry->getManager($connectionName);
         }
 
