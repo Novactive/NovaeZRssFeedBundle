@@ -70,6 +70,10 @@ class SiteAccessAwareEntityManagerFactory
             return $this->registry->getManager();
         }
 
+        if (in_array($connectionName, $this->registry->getManagerNames())) {
+            return $this->registry->getManager($connectionName);
+        }
+
         $connection = $this->registry->getConnection($connectionName);
 
         /** @var \Doctrine\DBAL\Connection $connection */
